@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Sistema de las 3 Cuentas™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:       #0E0C0A;
+  --paper:     #F7F4EE;
+  --gold:      #B8922A;
+  --gold-lt:   #D4AE52;
+  --cream:     #EDE8DC;
+  --muted:     #6B6456;
+  --rule:      rgba(14,12,10,0.12);
+  --green:     #1C4A35;
+  --red:       #7C1D1D;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── UTILITY ── */
+.container { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+.mono { font-family: 'DM Mono', monospace; }
+.serif { font-family: 'Cormorant Garamond', serif; }
+.gold { color: var(--gold); }
+
+/* ── ANNOUNCEMENT BAR ── */
+.ann-bar {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+  padding: 11px 20px;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+.ann-bar::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 80px,
+    rgba(184,146,42,0.06) 80px,
+    rgba(184,146,42,0.06) 81px
+  );
+}
+.ann-bar em { color: var(--gold-lt); font-style: normal; }
+
+/* ── MASTHEAD ── */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.brand span { color: var(--gold); }
+.masthead-right {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 80px 28px 0;
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+.hero-label::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 8vw, 82px);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.hero h1 .line-2 {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  display: block;
+}
+
+.hero-deck {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.75;
+  margin: 28px 0 48px;
+  font-weight: 300;
+}
+
+.hero-deck strong { color: var(--ink); font-weight: 600; }
+
+/* Hero rule decoration */
+.hero-rule {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0;
+}
+.hero-rule::before, .hero-rule::after {
+  content: ''; display: block; height: 1px; background: var(--rule);
+}
+.hero-rule span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 80px;
+}
+.stat {
+  padding: 28px 0;
+  text-align: center;
+  border-right: 1px solid var(--rule);
+}
+.stat:last-child { border-right: none; }
+.stat-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  display: block;
+}
+.stat-n em { color: var(--gold); font-style: normal; }
+.stat-l {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+  display: block;
+}
+
+/* ── SECTION BASE ── */
+.section {
+  padding: 72px 28px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.s-tag {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.s-tag::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--gold);
+}
+
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 50px);
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.s-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+.s-body {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 600px;
+}
+
+/* ── PAIN POINTS ── */
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 40px;
+}
+
+.pain-cell {
+  background: var(--paper);
+  padding: 28px 26px;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.pain-cell:hover { background: var(--cream); }
+
+.pain-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+  letter-spacing: 1px;
+}
+
+.pain-cell p {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.pain-cell p strong {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+/* ── PULL QUOTE ── */
+.pull-quote {
+  margin: 0;
+  padding: 52px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+
+.pull-quote::before {
+  content: '"';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 160px;
+  color: var(--cream);
+  position: absolute;
+  top: -20px;
+  left: -10px;
+  line-height: 1;
+  z-index: 0;
+}
+
+.pull-quote blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 3.5vw, 34px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.pull-quote cite {
+  display: block;
+  font-size: 13px;
+  font-style: normal;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 20px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── 3 CUENTAS ── */
+.cuentas-stack { margin-top: 44px; }
+
+.cuenta-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 0;
+  border: 1px solid var(--rule);
+  margin-bottom: -1px;
+  position: relative;
+  transition: transform 0.2s, z-index 0s;
+  background: var(--paper);
+}
+
+.cuenta-row:hover {
+  transform: translateX(4px);
+  z-index: 2;
+  box-shadow: -4px 0 0 var(--gold);
+}
+
+.cuenta-num-col {
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+}
+
+.c-pct {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+}
+.c1 .c-pct { color: var(--ink); }
+.c2 .c-pct { color: var(--green); }
+.c3 .c-pct { color: #8B5E00; }
+
+.c-icon { font-size: 18px; margin-top: 4px; }
+
+.cuenta-body-col {
+  padding: 22px 24px;
+}
+
+.c-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.c-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.cuenta-badge-col {
+  padding: 22px 20px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--rule);
+}
+
+.c-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.c1 .c-badge { color: var(--ink); }
+.c2 .c-badge { color: var(--green); }
+.c3 .c-badge { color: #8B5E00; }
+
+/* ── VALUE STACK ── */
+.value-stack {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 56px 44px;
+  margin: 0 -28px;
+}
+
+.value-stack .s-tag { color: rgba(247,244,238,0.45); }
+.value-stack .s-tag::before { background: var(--gold); }
+.value-stack .s-title { color: var(--paper); }
+
+.vs-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(247,244,238,0.08);
+  gap: 24px;
+}
+
+.vs-item:last-of-type { border-bottom: none; }
+
+.vs-left { flex: 1; }
+.vs-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.vs-title { font-size: 16px; font-weight: 500; color: var(--paper); margin-bottom: 4px; }
+.vs-desc { font-size: 13px; color: rgba(247,244,238,0.5); line-height: 1.5; }
+
+.vs-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgba(247,244,238,0.3);
+  text-decoration: line-through;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.vs-total {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(184,146,42,0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.vs-total-label {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(247,244,238,0.5);
+}
+
+.vs-total-price {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.vs-was {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: rgba(247,244,238,0.25);
+  text-decoration: line-through;
+}
+
+.vs-now {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* ── TESTIMONIALS ── */
+.testi-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 40px;
+}
+
+.testi {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.testi:first-child { border-top: 1px solid var(--rule); }
+
+.testi-stars {
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+
+.testi-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.testi-meta {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ── URGENCY BAR ── */
+.urgency {
+  background: var(--red);
+  color: white;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.urgency-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.urgency-dot {
+  width: 10px; height: 10px;
+  background: white;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.urgency-text {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.urgency-timer {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  padding: 80px 28px;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.price-block { margin: 40px 0; }
+
+.price-was-line {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.price-was-line span {
+  text-decoration: line-through;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+}
+
+.price-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 12vw, 96px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.price-big sup {
+  font-size: 0.35em;
+  vertical-align: top;
+  margin-top: 0.18em;
+  color: var(--muted);
+}
+
+.price-note {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 20px 56px;
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  transition: all 0.2s;
+  margin-top: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-101%);
+  transition: transform 0.25s ease;
+  z-index: 0;
+}
+
+.cta-btn span {
+  position: relative;
+  z-index: 1;
+  transition: color 0.25s;
+}
+
+.cta-btn:hover::after { transform: translateX(0); }
+.cta-btn:hover span { color: var(--ink); }
+
+.cta-secondary {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 18px;
+  letter-spacing: 0.5px;
+}
+
+.trust-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.trust-item {
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 500;
+}
+
+.trust-item::before {
+  content: '◆';
+  font-size: 6px;
+  color: var(--gold);
+}
+
+/* ── FAQ ── */
+.faq-list { margin-top: 36px; }
+
+.faq-q-wrap {
+  border-bottom: 1px solid var(--rule);
+  padding: 22px 0;
+  cursor: pointer;
+}
+
+.faq-q-wrap:first-child { border-top: 1px solid var(--rule); }
+
+.faq-q {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.faq-q::after {
+  content: '+';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.faq-q-wrap.open .faq-q::after {
+  transform: rotate(45deg);
+}
+
+.faq-a {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, margin-top 0.2s;
+}
+
+.faq-q-wrap.open .faq-a {
+  max-height: 200px;
+  margin-top: 14px;
+}
+
+/* ── GUARANTEE ── */
+.guarantee {
+  border: 1px solid var(--rule);
+  padding: 44px;
+  text-align: center;
+  position: relative;
+  margin-top: 40px;
+}
+
+.guarantee::before {
+  content: 'GARANTÍA';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper);
+  padding: 0 16px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.guarantee-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+
+.guarantee h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.guarantee p { font-size: 14px; color: var(--muted); line-height: 1.75; max-width: 480px; margin: 0 auto; }
+
+/* ── FOOTER ── */
+.footer {
+  border-top: 1px solid var(--rule);
+  padding: 32px 28px;
+  text-align: center;
+}
+
+.footer p { font-size: 12px; color: var(--muted); line-height: 1.8; }
+.footer a { color: var(--muted); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .pain-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid var(--rule); }
+  .stat:last-child { border-bottom: none; }
+  .cuenta-row { grid-template-columns: 64px 1fr; }
+  .cuenta-badge-col { display: none; }
+  .value-stack { padding: 44px 24px; margin: 0 -28px; }
+  .guarantee { padding: 32px 24px; }
+  .masthead-right { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANN BAR -->
+<div class="ann-bar">
+  Oferta de lanzamiento &nbsp;·&nbsp; <em>Precio especial termina pronto</em> &nbsp;·&nbsp; Acceso inmediato
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="brand">Sistema <span>3 Cuentas</span>™</div>
+  <div class="masthead-right">Finanzas Personales · Edición 2025</div>
+</header>
+
+<!-- HERO -->
+<section class="hero container">
+  <div class="hero-label">Método probado · Implementación en 1 hora</div>
+
+  <h1>
+    Tu dinero desaparece.<br>
+    <span class="line-2">Nosotros sabemos por qué.</span>
+  </h1>
+
+  <p class="hero-deck">
+    El <strong>Sistema de las 3 Cuentas™</strong> es el método que te dice exactamente
+    a dónde va cada peso — y te permite ahorrar de forma automática,
+    <strong>sin sacrificar lo que disfrutas</strong> y sin necesitar más ingresos.
+  </p>
+
+  <div class="hero-rule"><span>✦</span></div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-n">+<em>3,200</em></span>
+      <span class="stat-l">Personas aplicándolo</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n"><em>$847</em></span>
+      <span class="stat-l">Ahorro promedio / 90 días</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">4.<em>9</em> ★</span>
+      <span class="stat-l">Valoración media</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN POINTS -->
+<section class="section container reveal">
+  <p class="s-tag">El problema</p>
+  <h2 class="s-title">Reconoce <em>alguna</em> de estas situaciones</h2>
+  <p class="s-body">No es falta de disciplina. Es falta de estructura. El dinero sin sistema siempre desaparece.</p>
+
+  <div class="pain-grid">
+    <div class="pain-cell">
+      <span class="pain-num">01</span>
+      <p><strong>El misterio del mes</strong>Llegas al día 15 y ya no sabes cuánto tienes disponible ni en qué se fue la mitad.</p>
+    </div>
+    <div class="pain-cell">
+      <span class="pain-num">02</span>
+      <p><strong>La culpa de gastar</strong>Cada vez que compras algo para ti sientes que "no deberías" — aunque lo necesitaras.</p>
+    </div>
+    <div class="pain-cell">
+      <span class="pain-num">03</span>
+      <p><strong>El ahorro que nunca llega</strong>Cada mes te propones ahorrar "lo que sobre". Y nunca sobra nada.</p>
+    </div>
+    <div class="pain-cell">
+      <span class="pain-num">04</span>
+      <p><strong>La emergencia sin fondo</strong>Algo inesperado ocurre y no tienes de dónde sacar el dinero sin endeudarte.</p>
+    </div>
+    <div class="pain-cell">
+      <span class="pain-num">05</span>
+      <p><strong>Las deudas inmóviles</strong>Tienes deudas que llevan meses sin moverse porque siempre pagas lo mínimo.</p>
+    </div>
+    <div class="pain-cell">
+      <span class="pain-num">06</span>
+      <p><strong>El ciclo que se repite</strong>Ya intentaste presupuestos antes. Funcionaron 2 semanas. Luego todo volvió a lo mismo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<div class="container reveal">
+  <div class="pull-quote">
+    <blockquote>
+      "El 78% de quienes viven al día ganan suficiente dinero.
+      Su problema no es el ingreso — es la distribución."
+    </blockquote>
+    <cite>Principio base del Sistema 3 Cuentas™</cite>
+  </div>
+</div>
+
+<!-- SOLUTION: 3 CUENTAS -->
+<section class="section container reveal">
+  <p class="s-tag">La solución</p>
+  <h2 class="s-title">Un sistema. <em>Tres cuentas.</em><br>Claridad total.</h2>
+  <p class="s-body">El día de pago, tu dinero se divide en tres grupos con propósitos distintos — de forma automática. Sin apps complicadas. Sin fuerza de voluntad diaria.</p>
+
+  <div class="cuentas-stack">
+    <div class="cuenta-row c1">
+      <div class="cuenta-num-col">
+        <div class="c-pct">55%</div>
+        <div class="c-icon">🏠</div>
+      </div>
+      <div class="cuenta-body-col">
+        <div class="c-name">Cuenta 1 — Compromisos</div>
+        <div class="c-desc">Renta, servicios, transporte, deudas fijas. Todo lo que tienes que pagar sí o sí. Esta cuenta nunca se toca para otra cosa.</div>
+      </div>
+      <div class="cuenta-badge-col">
+        <span class="c-badge">Intocable</span>
+      </div>
+    </div>
+
+    <div class="cuenta-row c2">
+      <div class="cuenta-num-col">
+        <div class="c-pct">25%</div>
+        <div class="c-icon">💰</div>
+      </div>
+      <div class="cuenta-body-col">
+        <div class="c-name">Cuenta 2 — Ahorro</div>
+        <div class="c-desc">Se transfiere automáticamente el día de pago. Fondo de emergencia, metas financieras, inversión inicial. Ya está decidido antes de que lo veas.</div>
+      </div>
+      <div class="cuenta-badge-col">
+        <span class="c-badge">Automático</span>
+      </div>
+    </div>
+
+    <div class="cuenta-row c3">
+      <div class="cuenta-num-col">
+        <div class="c-pct">20%</div>
+        <div class="c-icon">🎉</div>
+      </div>
+      <div class="cuenta-body-col">
+        <div class="c-name">Cuenta 3 — Dinero Libre</div>
+        <div class="c-desc">Entretenimiento, caprichos, salidas, lo que quieras. Gástalo completamente sin culpa — está presupuestado. Para eso existe esta cuenta.</div>
+      </div>
+      <div class="cuenta-badge-col">
+        <span class="c-badge">Sin culpa</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section container reveal">
+  <p class="s-tag">Resultados reales</p>
+  <h2 class="s-title">Lo que dice <em>quien ya lo usa</em></h2>
+
+  <div class="testi-col">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"En 3 meses ahorré más que en los últimos 2 años. Lo implementé el mismo día que lo compré. La claridad que da es adictiva."</p>
+      <div class="testi-meta">María R. — Diseñadora freelance · Ciudad de México</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Lo que más me cambió fue poder gastar en lo que quiero SIN CULPA. Tenía presupuesto para eso. Eso transformó mi relación con el dinero."</p>
+      <div class="testi-meta">Carlos M. — Ejecutivo · Bogotá</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Usé el script de negociación del Bono 3 y bajé la tasa de mi tarjeta de 42% a 28%. Solo por hacer una llamada de 8 minutos."</p>
+      <div class="testi-meta">Sofía L. — Emprendedora · Buenos Aires</div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE STACK -->
+<div class="value-stack reveal">
+  <div class="container" style="max-width:780px; margin:0 auto; padding:0 28px;">
+    <p class="s-tag">El paquete completo</p>
+    <h2 class="s-title" style="color:var(--paper);">Todo lo que<br><em>recibes hoy</em></h2>
+
+    <div class="vs-item">
+      <div class="vs-left">
+        <div class="vs-label">Producto principal</div>
+        <div class="vs-title">📘 Guía: El Sistema de las 3 Cuentas™</div>
+        <div class="vs-desc">El método completo paso a paso. 20 páginas. Implementable en 1 hora.</div>
+      </div>
+      <div class="vs-price">$87</div>
+    </div>
+
+    <div class="vs-item">
+      <div class="vs-left">
+        <div class="vs-label">Bono 1</div>
+        <div class="vs-title">📊 Hoja de Cálculo Inteligente</div>
+        <div class="vs-desc">Calculadora automática + tracker mensual + proyección 12 meses. Excel y Google Sheets.</div>
+      </div>
+      <div class="vs-price">$37</div>
+    </div>
+
+    <div class="vs-item">
+      <div class="vs-left">
+        <div class="vs-label">Bono 2</div>
+        <div class="vs-title">📖 Las 7 Reglas de Oro del Dinero Inteligente</div>
+        <div class="vs-desc">Los principios que separan a quienes construyen patrimonio de quienes viven al día.</div>
+      </div>
+      <div class="vs-price">$27</div>
+    </div>
+
+    <div class="vs-item">
+      <div class="vs-left">
+        <div class="vs-label">Bono 3</div>
+        <div class="vs-title">📞 Script de Negociación de Deudas</div>
+        <div class="vs-desc">Guión palabra por palabra para renegociar tasas, plazos y montos con tus acreedores.</div>
+      </div>
+      <div class="vs-price">$47</div>
+    </div>
+
+    <div class="vs-item">
+      <div class="vs-left">
+        <div class="vs-label">Bono 4</div>
+        <div class="vs-title">🎯 Tracker de Metas Financieras — 12 Meses</div>
+        <div class="vs-desc">Planificador visual para definir, seguir y celebrar cada meta de ahorro del año.</div>
+      </div>
+      <div class="vs-price">$27</div>
+    </div>
+
+    <div class="vs-total">
+      <div>
+        <div class="vs-total-label">Valor total del paquete</div>
+        <div style="font-size:12px; color:rgba(247,244,238,0.35); margin-top:4px; letter-spacing:1px;">Tu precio especial de lanzamiento</div>
+      </div>
+      <div class="vs-total-price">
+        <span class="vs-was">$225</span>
+        <span class="vs-now">$27</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- URGENCY BAR -->
+<div class="urgency">
+  <div class="urgency-left">
+    <div class="urgency-dot"></div>
+    <div class="urgency-text">Precio de lanzamiento — disponible por tiempo limitado</div>
+  </div>
+  <div class="urgency-timer" id="timer">23:47:12</div>
+</div>
+
+<!-- CTA SECTION -->
+<section class="cta-section reveal" id="comprar">
+  <p class="s-tag" style="justify-content:center;">Toma la decisión</p>
+  <h2 class="s-title" style="text-align:center;">Empieza hoy,<br><em>no el lunes.</em></h2>
+  <p class="s-body" style="margin:0 auto; text-align:center;">Cada mes sin un sistema es otro mes de dinero que desaparece sin dejar rastro. El mejor momento fue hace un año. El segundo mejor es ahora.</p>
+
+  <div class="price-block">
+    <div class="price-was-line">Valor total del paquete: <span>$225 USD</span></div>
+    <div class="price-big"><sup>$</sup>27 <span style="font-size:0.35em; color:var(--muted); font-weight:300;">USD</span></div>
+    <div class="price-note">Pago único · Sin subscripción · Acceso de por vida</div>
+  </div>
+
+  <a href="https://mpago.la/1pYWfPf" target="_blank" rel="noopener" class="cta-btn"><span>Quiero el Sistema Completo →</span></a>
+  <span class="cta-sub" style="display:block; font-size:12px; color:var(--muted); margin-top:14px; letter-spacing:0.5px;">Descarga inmediata · Garantía de 30 días sin preguntas</span>
+
+  <div class="trust-row">
+    <div class="trust-item">Pago seguro</div>
+    <div class="trust-item">Descarga inmediata</div>
+    <div class="trust-item">Garantía 30 días</div>
+    <div class="trust-item">Acceso de por vida</div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="section container reveal">
+  <p class="s-tag">Sin riesgo</p>
+  <h2 class="s-title">Garantía total<br><em>de 30 días</em></h2>
+
+  <div class="guarantee">
+    <span class="guarantee-icon">🛡️</span>
+    <h3>Devolución completa. Sin preguntas.</h3>
+    <p>Si en 30 días no estás satisfecho con el sistema — por cualquier razón, o ninguna — te devolvemos el 100% de tu dinero. Sin formularios, sin esperas, sin complicaciones. El riesgo es completamente nuestro.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section container reveal">
+  <p class="s-tag">Dudas frecuentes</p>
+  <h2 class="s-title">Preguntas<br><em>antes de decidir</em></h2>
+
+  <div class="faq-list">
+    <div class="faq-q-wrap">
+      <div class="faq-q">¿Funciona si gano poco dinero?</div>
+      <div class="faq-a">Sí. El sistema usa porcentajes, no montos fijos. Funciona con cualquier ingreso porque distribuyes lo que tienes, no lo que quisieras tener. De hecho, con ingresos ajustados es más crítico tener un sistema que sin él.</div>
+    </div>
+    <div class="faq-q-wrap">
+      <div class="faq-q">¿Necesito abrir cuentas nuevas en el banco?</div>
+      <div class="faq-a">No necesariamente. Muchos bancos permiten crear "sobres" o subcuentas sin costo. También puedes usar dos cuentas existentes. Lo importante es la separación física del dinero, no el número de cuentas.</div>
+    </div>
+    <div class="faq-q-wrap">
+      <div class="faq-q">¿Cuánto tiempo toma implementarlo?</div>
+      <div class="faq-a">La configuración inicial toma entre 45 minutos y 2 horas. Después, el sistema funciona de forma automática: una transferencia programada al mes y 10 minutos semanales de revisión.</div>
+    </div>
+    <div class="faq-q-wrap">
+      <div class="faq-q">¿Qué pasa si tengo muchas deudas?</div>
+      <div class="faq-a">El sistema incluye una sección específica para ajustar los porcentajes si tienes deudas altas. Además, el Bono 3 te da el guión exacto para negociar tasas y plazos con tus acreedores.</div>
+    </div>
+    <div class="faq-q-wrap">
+      <div class="faq-q">¿En qué formato recibo el producto?</div>
+      <div class="faq-a">PDF para la guía y los bonos escritos. Excel (.xlsx) para la hoja de cálculo, compatible con Microsoft Excel y Google Sheets. Acceso y descarga inmediatos después del pago.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA REPEAT -->
+<div style="background:var(--ink); padding:60px 28px; text-align:center;">
+  <p style="font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:20px;">Última oportunidad</p>
+  <p style="font-family:'Cormorant Garamond',serif; font-size:clamp(28px,5vw,44px); color:var(--paper); font-weight:600; line-height:1.2; margin-bottom:32px;">¿Cuántos meses más<br>va a <em style="color:var(--gold);">desaparecer</em> tu dinero?</p>
+  <a href="https://mpago.la/1pYWfPf" target="_blank" rel="noopener" class="cta-btn" style="border-color:var(--gold); background:var(--gold); color:var(--ink);"><span style="color:var(--ink);">Empezar ahora — $27 USD →</span></a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2025 El Sistema de las 3 Cuentas™ · Todos los derechos reservados</p>
+  <p style="margin-top:8px;"><a href="#">Privacidad</a> · <a href="#">Términos</a> · <a href="#">Contacto</a></p>
+  <p style="margin-top:14px; font-size:11px;">Los resultados mostrados son reales pero no garantizan resultados individuales. Los resultados varían según ingresos, compromisos y consistencia de cada persona.</p>
+</footer>
+
+<script>
+// ── FAQ Toggle ──
+document.querySelectorAll('.faq-q-wrap').forEach(wrap => {
+  wrap.addEventListener('click', () => {
+    const isOpen = wrap.classList.contains('open');
+    document.querySelectorAll('.faq-q-wrap').forEach(w => w.classList.remove('open'));
+    if (!isOpen) wrap.classList.add('open');
+  });
+});
+
+// ── Scroll Reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(r => observer.observe(r));
+
+// ── Countdown Timer ──
+function startTimer() {
+  // Random starting time 18-23 hours for urgency
+  let total = (20 * 3600) + (33 * 60) + 47;
+  const el = document.getElementById('timer');
+  if (!el) return;
+  const tick = () => {
+    if (total <= 0) { el.textContent = '00:00:00'; return; }
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    total--;
+    setTimeout(tick, 1000);
+  };
+  tick();
+}
+startTimer();
+</script>
+</body>
+</html>
